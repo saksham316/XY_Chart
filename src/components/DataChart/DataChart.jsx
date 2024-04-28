@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { instance } from '../../services/axiosInterceptor'
 import { Line } from "react-chartjs-2"
 import { Chart as ChartJs, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js"
+import PageLoader from '../../common/Loaders/PageLoader/PageLoader'
 // ---------------------------------------------------------------------------------------------------------------------------------
 
 ChartJs.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
@@ -83,9 +84,11 @@ const DataChart = () => {
 
 
     // ---------------------------------------------------------------------------------------------------------------------------------
-    return chartData.length === 0 ? <h1>Loading...</h1> : (
-        <div>
-            <Line data={lineChartData} />
+    return chartData.length === 0 ? <div className='min-h-[500px] w-[100%] flex items-center justify-center'><PageLoader /></div> : (
+        <div className='min-h-[500px]'>
+            <div className='overflow-x-scroll'>
+                <Line data={lineChartData} />
+            </div>
         </div>
     )
 }

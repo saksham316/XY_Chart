@@ -7,7 +7,7 @@ import Header from '../Header/Header'
 
 const Main = () => {
     return (
-        <div className='relative'>
+        <div className='relative '>
             <Header />
             <Outlet />
             <Footer />
