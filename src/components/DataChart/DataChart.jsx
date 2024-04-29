@@ -84,7 +84,7 @@ const DataChart = () => {
 
 
     // ---------------------------------------------------------------------------------------------------------------------------------
-    return chartData.length === 0 ? <div className='min-h-[500px] h-[60vh] w-[100%] flex items-center justify-center'><PageLoader /></div> : (
+    return chartData.length === 0 ? <div className='min-h-[500px] w-[100%] flex items-center justify-center'><PageLoader /></div> : (
         <div className='min-h-[500px]'>
             <div className='overflow-x-scroll'>
                 <Line data={lineChartData} />

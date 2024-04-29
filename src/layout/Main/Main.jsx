@@ -8,9 +8,15 @@ import Header from '../Header/Header'
 const Main = () => {
     return (
         <div className='relative '>
-            <Header />
-            <Outlet />
-            <Footer />
+            <div className="">
+                <Header />
+            </div>
+            <div className="">
+                <Outlet />
+            </div>
+            <div className="">
+                <Footer />
+            </div>
         </div>
     )
 }
