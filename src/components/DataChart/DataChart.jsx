@@ -2,17 +2,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { instance } from "../../services/axiosInterceptor";
-// import { Line } from "react-chartjs-2";
-// import {
-//   Chart as ChartJs,
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// } from "chart.js";
 import {
   LineChart,
   Line,
@@ -21,34 +10,23 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ScatterChart,
+  Scatter,
 } from "recharts";
 import PageLoader from "../../common/Loaders/PageLoader/PageLoader";
 // ---------------------------------------------------------------------------------------------------------------------------------
 
-// ChartJs.register(
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-//   Title,
-//   Tooltip,
-//   Legend
-// );
 
 const DataChart = () => {
   // -------------------------------------------------------------States-------------------------------------------------------------
   const [chartData, setChartData] = useState([]);
 
-  const [combinedData, setCombinedData] = useState({});
+  const [combinedData, setCombinedData] = useState([]);
 
-  const [lineChartData, setLineChartData] = useState({
-    labels: [],
-    datasets: [
-      // label: "y-axis",
-      // data: y,
-      // borderColor: "rgb(75,192,192)"
-    ],
-  });
+  const [xData, setXData] = useState([])
+  const [yData, setYData] = useState([])
+
+
   // ---------------------------------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------Hooks-------------------------------------------------------------
   // ---------------------------------------------------------------------------------------------------------------------------------
@@ -73,6 +51,21 @@ const DataChart = () => {
       console.error(error.message);
     }
   };
+
+  // Function to transform data into a suitable format for Recharts
+  const transformData = (x, y) => {
+    let arr = [];
+    for (let i = 0; i < 50; i++) {
+      arr.push({
+        x: x[i]?.RandomNumber,
+        y: y[i]?.RandomNumber,
+        labelX: x[i]?.Label,
+        labelY: y[i]?.Label,
+      })
+    }
+    return arr
+  };
+
   // ---------------------------------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------useEffects-------------------------------------------------------------
 
@@ -80,23 +73,9 @@ const DataChart = () => {
     if (Array.isArray(chartData) && chartData.length > 0) {
       let [xData, yData] = chartData;
 
-      xData.sort((a, b) => {
-        return a.id - b.id;
-      });
-      yData.sort((a, b) => {
-        return a.id - b.id;
-      });
 
-      let combinedArray = [];
-
-      for (let i = 0; i < 50; i++) {
-        combinedArray.push({
-          Label: xData[i]?.id,
-          xData: xData[i]?.RandomNumber,
-          yData: yData[i]?.RandomNumber,
-        });
-      }
-      setCombinedData(combinedArray);
+      const combinedData = transformData(xData, yData);
+      setCombinedData(combinedData)
     }
   }, [chartData]);
 
@@ -114,7 +93,7 @@ const DataChart = () => {
   ) : (
     <div className="min-h-[500px]">
       <div className="overflow-x-scroll">
-        <LineChart width={1500} height={550} data={combinedData}>
+        {/* <LineChart width={1500} height={550} data={combinedData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="Label" />
           <YAxis />
@@ -132,7 +111,22 @@ const DataChart = () => {
             stroke="#82ca9d"
             name="Y Data"
           />
-        </LineChart>
+        </LineChart> */}
+        <ScatterChart
+          width={1500}
+          height={550}
+          margin={{
+            top: 20, right: 20, bottom: 20, left: 20,
+          }}
+        >
+          <CartesianGrid />
+          <XAxis type="number" dataKey="x" name="X" tickCount={20} domain={[0,1000]}/>
+          <YAxis type="number" dataKey="y" name="Y" tickCount={20}/>
+          <Tooltip />
+          {combinedData?.map((point, index) => (
+            <Scatter key={index} name={`(${point.labelX}, ${point.labelY})`} data={[point]} fill="#8884d8" />
+          ))}
+        </ScatterChart>
       </div>
     </div>
   );
