@@ -120,8 +120,8 @@ const DataChart = () => {
           }}
         >
           <CartesianGrid />
-          <XAxis type="number" dataKey="x" name="X" tickCount={20} domain={[0,1000]}/>
-          <YAxis type="number" dataKey="y" name="Y" tickCount={20}/>
+          <XAxis type="number" dataKey="x" name="X" tickCount={30} domain={[0,1000]}/>
+          <YAxis type="number" dataKey="y" name="Y" tickCount={30}/>
           <Tooltip />
           {combinedData?.map((point, index) => (
             <Scatter key={index} name={`(${point.labelX}, ${point.labelY})`} data={[point]} fill="#8884d8" />
