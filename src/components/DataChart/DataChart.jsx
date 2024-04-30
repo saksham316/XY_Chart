@@ -114,7 +114,7 @@ const DataChart = () => {
         </LineChart> */}
         <ScatterChart
           width={1500}
-          height={550}
+          height={600}
           margin={{
             top: 20, right: 20, bottom: 20, left: 20,
           }}
